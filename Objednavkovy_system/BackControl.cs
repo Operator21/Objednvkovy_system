@@ -10,5 +10,6 @@ namespace Objednavkovy_system
     public static class BackControl
     {
         public static Frame frame { get; set; }
+        public static StackPanel panel { get; set; }
     }
 }

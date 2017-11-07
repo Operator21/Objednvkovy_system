@@ -23,6 +23,8 @@ namespace Objednavkovy_system
         public MainWindow()
         {
             InitializeComponent();
+            BackControl.frame = frame;
+            frame.Navigate(new CustomerList());
         }
     }
 }

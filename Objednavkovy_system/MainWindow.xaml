@@ -6,7 +6,12 @@
         xmlns:local="clr-namespace:Objednavkovy_system"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+    <StackPanel>
+        <Button x:Name="show">Ukázat</Button>
+        <StackPanel x:Name="menu">
+            <Button x:Name="customers">Zákazníci</Button>
+            <Button x:Name="games">Hry</Button>
+        </StackPanel>
+        <Frame x:Name="frame"></Frame>
+    </StackPanel>
 </Window>
