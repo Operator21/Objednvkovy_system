@@ -16,21 +16,25 @@ using System.Windows.Shapes;
 namespace Objednavkovy_system
 {
     /// <summary>
-    /// Interakční logika pro MainWindow.xaml
+    /// Interakční logika pro GamePage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class GamePage : Page
     {
-        public MainWindow()
+        Label l;
+        public GamePage(Game g)
         {
             InitializeComponent();
-            BackControl.frame = frame;
-            BackControl.CartItems = Cart_Items;
-            frame.Navigate(new CustomerList());
+            Background.Source = new BitmapImage(new Uri(g.URL));
+            name.Content = g.Name;
+            price.Content = g.Price + "$";
+            l = BackControl.CartItems;
         }
 
-        private void games_Click(object sender, RoutedEventArgs e)
+        private void buy_Click(object sender, RoutedEventArgs e)
         {
-            BackControl.frame.Navigate(new GameList());
+            int items = Convert.ToInt32(l.Content);
+            items++;
+            BackControl.CartItems.Content = items;
         }
     }
 }

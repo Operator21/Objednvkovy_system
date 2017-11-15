@@ -16,21 +16,13 @@ using System.Windows.Shapes;
 namespace Objednavkovy_system
 {
     /// <summary>
-    /// Interakční logika pro MainWindow.xaml
+    /// Interakční logika pro ShoppingCart.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ShoppingCart : Page
     {
-        public MainWindow()
+        public ShoppingCart()
         {
             InitializeComponent();
-            BackControl.frame = frame;
-            BackControl.CartItems = Cart_Items;
-            frame.Navigate(new CustomerList());
-        }
-
-        private void games_Click(object sender, RoutedEventArgs e)
-        {
-            BackControl.frame.Navigate(new GameList());
         }
     }
 }

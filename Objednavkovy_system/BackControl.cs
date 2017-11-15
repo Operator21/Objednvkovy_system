@@ -11,5 +11,6 @@ namespace Objednavkovy_system
     {
         public static Frame frame { get; set; }
         public static StackPanel panel { get; set; }
+        public static Label CartItems { get; set; }
     }
 }

@@ -4,14 +4,36 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Objednavkovy_system"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <StackPanel>
-        <Button x:Name="show">Ukázat</Button>
-        <StackPanel x:Name="menu">
-            <Button x:Name="customers">Zákazníci</Button>
-            <Button x:Name="games">Hry</Button>
-        </StackPanel>
-        <Frame x:Name="frame"></Frame>
-    </StackPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition MaxHeight="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Menu VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" >
+                <MenuItem>
+                    <MenuItem.Icon>
+                        <fa:ImageAwesome Icon="Bars" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </MenuItem.Icon>
+                    <Button x:Name="show" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">Ukázat</Button>
+                    <Button x:Name="customers" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">Zákazníci</Button>
+                    <Button x:Name="games" Click="games_Click" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">Hry</Button>
+                </MenuItem>
+            </Menu>
+            <Button Grid.Column="1">
+                <DockPanel>
+                    <fa:ImageAwesome Icon="ShoppingCart" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <Label x:Name="Cart_Items" Content="{ Binding }"></Label>
+                </DockPanel>
+            </Button>
+        </Grid>
+        <Frame x:Name="frame" NavigationUIVisibility="Hidden"  Grid.Row="1"></Frame>
+    </Grid>
 </Window>
