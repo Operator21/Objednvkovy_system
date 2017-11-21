@@ -25,12 +25,17 @@ namespace Objednavkovy_system
             InitializeComponent();
             BackControl.frame = frame;
             BackControl.CartItems = Cart_Items;
-            frame.Navigate(new CustomerList());
+            frame.Navigate(new Login());
         }
 
         private void games_Click(object sender, RoutedEventArgs e)
         {
             BackControl.frame.Navigate(new GameList());
+        }
+
+        private void customers_Click(object sender, RoutedEventArgs e)
+        {
+            BackControl.frame.Navigate(new CustomerList());
         }
     }
 }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Objednavkovy_system
 {
-    public class Game
+    class GameOrder
     {
         public int ID { get; set; }
-        public string Name { get; set; }
-        public float Price { get; set; }
-        public string URL { get; set; }
+        public int OrderID { get; set; }
+        public int GameID { get; set; }
+        
     }
 }

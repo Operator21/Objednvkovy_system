@@ -9,7 +9,7 @@ namespace Objednavkovy_system
     class Order
     {
         public int ID { get; set; }
-        public int Customer_ID { get; set; }
+        public int CustomerID { get; set; }
         public DateTime Date { get; set; }
         public float Price { get; set; }
     }
