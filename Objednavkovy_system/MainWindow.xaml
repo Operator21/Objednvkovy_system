@@ -27,13 +27,13 @@
                     <Button x:Name="games" Click="games_Click" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">Hry</Button>
                 </MenuItem>
             </Menu>
-            <Button Grid.Column="1">
+            <Button Grid.Column="1" Click="Button_Click">
                 <DockPanel>
                     <fa:ImageAwesome Icon="ShoppingCart" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <Label x:Name="Cart_Items" Content="{ Binding }"></Label>
                 </DockPanel>
             </Button>
         </Grid>
-        <Frame x:Name="frame" NavigationUIVisibility="Hidden"  Grid.Row="1"></Frame>
+        <Frame x:Name="Frame" NavigationUIVisibility="Hidden"  Grid.Row="1"></Frame>
     </Grid>
 </Window>

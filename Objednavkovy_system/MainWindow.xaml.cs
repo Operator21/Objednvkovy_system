@@ -23,9 +23,10 @@ namespace Objednavkovy_system
         public MainWindow()
         {
             InitializeComponent();
-            BackControl.frame = frame;
+            BackControl.frame = Frame;
             BackControl.CartItems = Cart_Items;
-            frame.Navigate(new Login());
+            BackControl.APIKey = "1bbedf5f-e277-451f-b895-0f972ea47383";
+            Frame.Navigate(new Login());
         }
 
         private void games_Click(object sender, RoutedEventArgs e)
@@ -36,6 +37,11 @@ namespace Objednavkovy_system
         private void customers_Click(object sender, RoutedEventArgs e)
         {
             BackControl.frame.Navigate(new CustomerList());
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            BackControl.frame.Navigate(new ShoppingCart());
         }
     }
 }

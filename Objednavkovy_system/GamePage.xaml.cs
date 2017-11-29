@@ -35,21 +35,40 @@ namespace Objednavkovy_system
 
         private void buy_Click(object sender, RoutedEventArgs e)
         {
+            OrderAdd();  
+        }
+        private void OrderAdd()
+        {
             int items = Convert.ToInt32(l.Content);
             items++;
             BackControl.CartItems.Content = items;
             GameOrder go = new GameOrder();
+
+            if (BackControl.Order < 1)
+            {
+                Order o = new Order();
+                o.CustomerID = BackControl.Logged;
+
+                string urlo = "insert.php?Table=API_Orders";
+                var cliento = new RestClient(BackControl.URL + urlo);
+                var requesto = new RestRequest(Method.POST);
+                requesto.AddHeader("cache-control", "no-cache");
+                requesto.AddHeader("content-type", "application/json");
+                requesto.AddParameter("application/json", Newtonsoft.Json.JsonConvert.SerializeObject(o), ParameterType.RequestBody);
+                IRestResponse responseo = cliento.Execute(requesto);
+                int id = Convert.ToInt32(responseo.Content);
+                BackControl.Order = id;
+            }
+            go.OrderID = BackControl.Order;
             go.GameID = game.ID;
-            go.OrderID = 7;
-            string url = "https://student.sps-prosek.cz/~zdychst14/Game_shop/insert.php?Table=API_Games_Orders";
-            //string url = "https://requestb.in/10kkloz1";
-            var client = new RestClient(url);
+
+            string url = "insert.php?Table=API_Games_Orders";
+            var client = new RestClient(BackControl.URL + url);
             var request = new RestRequest(Method.POST);
             request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/json");
             request.AddParameter("application/json", Newtonsoft.Json.JsonConvert.SerializeObject(go), ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
-            MessageBox.Show(response.Content);
-    }
+        }
     }
 }

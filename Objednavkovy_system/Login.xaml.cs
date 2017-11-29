@@ -2,6 +2,7 @@
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -26,19 +27,23 @@ namespace Objednavkovy_system
         string pswd;
         public Login()
         {
-            InitializeComponent();         
+            InitializeComponent();
         }
         private async Task GetItems()
         {
-            var client = new RestClient("https://student.sps-prosek.cz/~zdychst14/Game_shop/script.php?Table=API_Customers&Nick=" + email.Text + "&Password=" + password.Text);
+            var client = new RestClient("https://student.sps-prosek.cz/~zdychst14/Game_shop/script.php?Table=API_Customers&Nick=" + email.Text + "&Password=" + password.Text + "&key=" + BackControl.APIKey);
             var request = new RestRequest(Method.GET);
             request.AddHeader("postman-token", "831baaf3-6305-6de2-22ea-daee8334e754");
             request.AddHeader("cache-control", "no-cache");
             IRestResponse response = client.Execute(request);
+            Debug.WriteLine(response.Content);
+
             try
             {
-                JsonConvert.DeserializeObject<Customer>(response.Content);
-                MessageBox.Show("Přihlášen jako " + email.Text);
+                string parsed = response.Content.Substring(1, response.Content.Length - 2);
+                Customer c = JsonConvert.DeserializeObject<Customer>(parsed);
+                MessageBox.Show("Přihlášen jako " + c.Nick);
+                BackControl.Logged = c.ID;
                 BackControl.frame.Navigate(new GameList());
             }
             catch
@@ -49,7 +54,7 @@ namespace Objednavkovy_system
 
         private void login_Click(object sender, RoutedEventArgs e)
         {
-            GetItems();
+            GetItems();            
         }
     }
 }
