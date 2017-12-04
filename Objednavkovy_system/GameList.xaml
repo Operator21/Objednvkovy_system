@@ -8,8 +8,8 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="GameList">
 
-    <StackPanel>
-        <ListBox x:Name="Games" SelectionChanged="Games_SelectionChanged">
+    <Grid>
+        <ListBox x:Name="Games" SelectionChanged="Games_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Visible">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DockPanel Margin="2">
@@ -19,5 +19,5 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-    </StackPanel>
+    </Grid>
 </Page>

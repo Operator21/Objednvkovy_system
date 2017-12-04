@@ -24,8 +24,10 @@ namespace Objednavkovy_system
     public partial class ShoppingCart : Page
     {
         List<GameOrder> id_list = new List<GameOrder>();
-        List<Game> game_list = new List<Game>();
-        List<Game> games_in_list = new List<Game>();
+        List<Order> order_list = new List<Order>();
+        List<Game> games_list = new List<Game>();
+        List<Game> games_in_order = new List<Game>();
+        float price = 0;
         public ShoppingCart()
         {
             InitializeComponent();
@@ -33,36 +35,51 @@ namespace Objednavkovy_system
         }
         private void GetGames()
         {
+            var client1 = new RestClient(BackControl.URL + "script.php?Table=API_Orders&Customer_ID=" + BackControl.Logged);
+            var request1 = new RestRequest(Method.GET);
+            request1.AddHeader("cache-control", "no-cache");
+            IRestResponse response1 = client1.Execute(request1);
+            order_list = JsonConvert.DeserializeObject<List<Order>>(response1.Content);
+
             var client = new RestClient(BackControl.URL + "script.php?Table=API_Games_Orders");
             var request = new RestRequest(Method.GET);
             request.AddHeader("cache-control", "no-cache");
             IRestResponse response = client.Execute(request);
             id_list = JsonConvert.DeserializeObject<List<GameOrder>>(response.Content);
-            foreach (GameOrder g in id_list)
+
+            var client2 = new RestClient(BackControl.URL + "script.php?Table=API_Games");
+            var request2 = new RestRequest(Method.GET);
+            request2.AddHeader("cache-control", "no-cache");
+            IRestResponse response2 = client2.Execute(request2);
+            games_list = JsonConvert.DeserializeObject<List<Game>>(response2.Content);
+
+            foreach (Order o in order_list)
             {
-                Debug.WriteLine("ID: " + g.ID.ToString());
-                Debug.WriteLine("GameID: " + g.GameID);
-                Debug.WriteLine("OrderID: " + g.OrderID);
-            }
-            var client1 = new RestClient(BackControl.URL + "script.php?Table=API_Games");
-            var request1 = new RestRequest(Method.GET);
-            request.AddHeader("cache-control", "no-cache");
-            IRestResponse response1 = client.Execute(request);
-            game_list = JsonConvert.DeserializeObject<List<Game>>(response.Content);
-            
-            foreach (GameOrder go in id_list)
-            {
-                Debug.WriteLine("..." + go.GameID);
-                foreach (Game g in game_list)
+                Debug.WriteLine("Objednavka: " + o.ID);
+                foreach(GameOrder go in id_list)
                 {
-                    Debug.WriteLine("_" + g.ID);
-                    if(go.GameID == g.ID)
+                    if(go.OrderID == o.ID)
                     {
-                        games_in_list.Add(g);
-                    }
+                        Debug.WriteLine("-" + go.ID);
+                        foreach(Game g in games_list)
+                        {
+                            if(g.ID == go.GameID)
+                            {
+                                Debug.WriteLine("--" + g.Name);
+                                games_in_order.Add(g);
+                                price += g.Price;
+                                Check.Content = "Zaplatit " + price;
+                            }    
+                        }
+                    }                    
                 }
             }
-            Games.ItemsSource = games_in_list;
+            Games.ItemsSource = games_in_order;
+        }
+
+        private void Check_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

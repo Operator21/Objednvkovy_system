@@ -10,7 +10,7 @@
 
     <StackPanel>
         <Grid>
-            <ListView x:Name="Item_list" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <ListView x:Name="Item_list" ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Název" Width="150" DisplayMemberBinding="{Binding Name}" />

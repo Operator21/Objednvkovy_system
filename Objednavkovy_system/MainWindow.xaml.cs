@@ -26,7 +26,8 @@ namespace Objednavkovy_system
             BackControl.frame = Frame;
             BackControl.CartItems = Cart_Items;
             BackControl.APIKey = "1bbedf5f-e277-451f-b895-0f972ea47383";
-            Frame.Navigate(new Login());
+            Controls.Visibility = Visibility.Collapsed;
+            Frame.Navigate(new Login(Controls));
         }
 
         private void games_Click(object sender, RoutedEventArgs e)

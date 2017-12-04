@@ -25,9 +25,11 @@ namespace Objednavkovy_system
     public partial class Login : Page
     {
         string pswd;
-        public Login()
+        Grid Control;
+        public Login(Grid c)
         {
             InitializeComponent();
+            Control = c;
         }
         private async Task GetItems()
         {
@@ -44,6 +46,7 @@ namespace Objednavkovy_system
                 Customer c = JsonConvert.DeserializeObject<Customer>(parsed);
                 MessageBox.Show("Přihlášen jako " + c.Nick);
                 BackControl.Logged = c.ID;
+                Control.Visibility = Visibility.Visible;
                 BackControl.frame.Navigate(new GameList());
             }
             catch
@@ -54,7 +57,14 @@ namespace Objednavkovy_system
 
         private void login_Click(object sender, RoutedEventArgs e)
         {
-            GetItems();            
+            if (String.IsNullOrWhiteSpace(email.Text) || String.IsNullOrWhiteSpace(password.Text))
+            {
+                MessageBox.Show("Nejdříve vyplňte formulář");
+            }
+            else
+            {
+                GetItems();
+            }          
         }
     }
 }
