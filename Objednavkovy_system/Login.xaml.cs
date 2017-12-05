@@ -33,7 +33,7 @@ namespace Objednavkovy_system
         }
         private async Task GetItems()
         {
-            var client = new RestClient("https://student.sps-prosek.cz/~zdychst14/Game_shop/script.php?Table=API_Customers&Nick=" + email.Text + "&Password=" + password.Text + "&key=" + BackControl.APIKey);
+            var client = new RestClient("https://student.sps-prosek.cz/~zdychst14/Game_shop/script.php?Table=API_Customers&Nick=" + email.Text + "&Password=" + password.Password + "&key=" + BackControl.APIKey);
             var request = new RestRequest(Method.GET);
             request.AddHeader("postman-token", "831baaf3-6305-6de2-22ea-daee8334e754");
             request.AddHeader("cache-control", "no-cache");
@@ -57,7 +57,7 @@ namespace Objednavkovy_system
 
         private void login_Click(object sender, RoutedEventArgs e)
         {
-            if (String.IsNullOrWhiteSpace(email.Text) || String.IsNullOrWhiteSpace(password.Text))
+            if (String.IsNullOrWhiteSpace(email.Text) || String.IsNullOrWhiteSpace(password.Password))
             {
                 MessageBox.Show("Nejdříve vyplňte formulář");
             }

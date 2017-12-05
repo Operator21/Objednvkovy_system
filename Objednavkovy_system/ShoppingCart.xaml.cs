@@ -26,8 +26,9 @@ namespace Objednavkovy_system
         List<GameOrder> id_list = new List<GameOrder>();
         List<Order> order_list = new List<Order>();
         List<Game> games_list = new List<Game>();
-        List<Game> games_in_order = new List<Game>();
+        List<Order> Orders_in_gui = new List<Order>();
         float price = 0;
+        int count;
         public ShoppingCart()
         {
             InitializeComponent();
@@ -47,13 +48,37 @@ namespace Objednavkovy_system
             IRestResponse response = client.Execute(request);
             id_list = JsonConvert.DeserializeObject<List<GameOrder>>(response.Content);
 
+            foreach (Order o in order_list)
+            {
+                Debug.WriteLine("Prověřuji: " + o.ID);
+                count = 0;
+                foreach(GameOrder go in id_list)
+                {
+                    if(go.OrderID == o.ID)
+                    {
+                        count++;
+                        Debug.WriteLine(count);
+                    }               
+                }
+                if(count > 0)
+                {
+                    Orders_in_gui.Add(o);
+                    Debug.WriteLine(o.ID + " Jde do listu");
+                } else
+                {
+                    Debug.WriteLine(o.ID + "-");
+                }
+            }
+            Order_list.ItemsSource = Orders_in_gui;
+            /*
             var client2 = new RestClient(BackControl.URL + "script.php?Table=API_Games");
             var request2 = new RestRequest(Method.GET);
             request2.AddHeader("cache-control", "no-cache");
             IRestResponse response2 = client2.Execute(request2);
-            games_list = JsonConvert.DeserializeObject<List<Game>>(response2.Content);
+            games_list = JsonConvert.DeserializeObject<List<Game>>(response2.Content);*/
 
-            foreach (Order o in order_list)
+            
+            /*foreach (Order o in order_list)
             {
                 Debug.WriteLine("Objednavka: " + o.ID);
                 foreach(GameOrder go in id_list)
@@ -73,13 +98,19 @@ namespace Objednavkovy_system
                         }
                     }                    
                 }
-            }
-            Games.ItemsSource = games_in_order;
+            }*/
+            //Games.ItemsSource = games_in_order;
         }
 
         private void Check_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Order_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Order o = (Order)Order_list.SelectedItem;
+            BackControl.frame.Navigate(new OrderView(o));
         }
     }
 }

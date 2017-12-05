@@ -22,8 +22,6 @@
                     <MenuItem.Icon>
                         <fa:ImageAwesome Icon="Bars" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     </MenuItem.Icon>
-                    <Button x:Name="show" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">Ukázat</Button>
-                    <Button x:Name="customers" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Click="customers_Click">Zákazníci</Button>
                     <Button x:Name="games" Click="games_Click" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">Hry</Button>
                 </MenuItem>
             </Menu>

@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace Objednavkovy_system
 {
-    public class Order
+    public class GameOrder_List
     {
         public int ID { get; set; }
-        public int CustomerID { get; set; }
-        public DateTime Date { get; set; }
+        public string Name { get; set; }
+        public float Price { get; set; }
+        public string URL { get; set; }
+        public int OrderID { get; set; }
     }
 }
