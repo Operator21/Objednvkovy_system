@@ -35,7 +35,8 @@ namespace Objednavkovy_system
 
         private void buy_Click(object sender, RoutedEventArgs e)
         {
-            OrderAdd();  
+            //OrderAdd();  
+            BackControl.GamesOrdered.Add(game);
         }
         private void OrderAdd()
         {

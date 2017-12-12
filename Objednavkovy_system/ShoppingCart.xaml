@@ -13,7 +13,7 @@
             <RowDefinition/>
             <RowDefinition MaxHeight="40" MinHeight="40"/>
         </Grid.RowDefinitions>
-        <!--<ListBox x:Name="Games" Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Visible">
+        <ListBox x:Name="Games" Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Visible">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DockPanel Margin="2">
@@ -23,14 +23,24 @@
                     </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-        </ListBox>-->
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete" Click="MenuItem_Click"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
+        <Grid x:Name="alert" Visibility="Collapsed">
+            <Label HorizontalContentAlignment="Center">Košík je prázdný</Label>
+        </Grid>
+        
+        <!--
         <ListView x:Name="Order_list" SelectionChanged="Order_list_SelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Label Content="{Binding Date}"></Label>
                 </DataTemplate>
             </ListView.ItemTemplate>
-        </ListView>
-        <Button Grid.Row="1" x:Name="Check" Click="Check_Click">Buy</Button>
+        </ListView>-->
+        <Button Grid.Row="1" x:Name="Check" Click="Check_Click">Objednat</Button>
     </Grid>
 </Page>

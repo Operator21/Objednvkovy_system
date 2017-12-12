@@ -52,6 +52,7 @@ namespace Objednavkovy_system
             catch
             {
                 MessageBox.Show("Uživatel " + email.Text + " nenalezen.");
+                password.Password = "";
             }
         }
 
@@ -65,6 +66,12 @@ namespace Objednavkovy_system
             {
                 GetItems();
             }          
+        }
+
+        private void alogin_Click(object sender, RoutedEventArgs e)
+        {
+            email.Text = "galscze";
+            password.Password = "123456";
         }
     }
 }

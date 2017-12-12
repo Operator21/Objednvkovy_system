@@ -16,5 +16,6 @@ namespace Objednavkovy_system
         public static int Logged { get; set; }
         public static int Order { get; set; }
         public static string URL = "https://student.sps-prosek.cz/~zdychst14/Game_shop/";
+        public static List<Game> GamesOrdered = new List<Game>();
     }
 }

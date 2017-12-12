@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Objednavkovy_system
 {
-    class GameOrder
+    public class GameOrder
     {
         public int ID { get; set; }
         public int OrderID { get; set; }

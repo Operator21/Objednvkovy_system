@@ -13,6 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition MaxHeight="30"/>
             <RowDefinition/>
+            <RowDefinition MaxHeight="40" MinHeight="40"/>
         </Grid.RowDefinitions>
         <Button Grid.Row="0" Click="Button_Click">
             <fa:ImageAwesome Icon="ArrowCircleLeft" Margin="3"/>
@@ -33,5 +34,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Button Grid.Row="2" x:Name="Check" Click="Check_Click">Zaplatit</Button>
     </Grid>
 </Page>

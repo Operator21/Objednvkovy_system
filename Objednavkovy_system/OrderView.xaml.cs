@@ -27,11 +27,20 @@ namespace Objednavkovy_system
         List<Game> games_list = new List<Game>();
         List<GameOrder_List> games_in_order = new List<GameOrder_List>();
         int ID;
+        Order order;
         public OrderView(Order o)
         {
             InitializeComponent();
             ID = o.ID;
-            GetGames();
+            order = o;
+            //MessageBox.Show(order.Paid.ToString());
+            if (order.Paid == 1)
+            {
+                Check.IsEnabled = false;
+                Check.Content = "Zaplaceno";
+            }
+
+            GetGames();            
         }
         private void GetGames()
         {
@@ -73,7 +82,7 @@ namespace Objednavkovy_system
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            BackControl.frame.Navigate(new ShoppingCart());
+            BackControl.frame.Navigate(new OrdersList());
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -84,7 +93,19 @@ namespace Objednavkovy_system
             var request1 = new RestRequest(Method.GET);
             request1.AddHeader("cache-control", "no-cache");
             IRestResponse response1 = client1.Execute(request1);
-            GetGames();
+            BackControl.frame.Navigate(new OrderView(order));
+        }
+
+        private void Check_Click(object sender, RoutedEventArgs e)
+        {
+            string url = "insert.php?Table=API_Orders&Paid=1&ID=" + ID;
+            var cliento = new RestClient(BackControl.URL + url);
+            var requesto = new RestRequest(Method.POST);
+            requesto.AddHeader("cache-control", "no-cache");
+            requesto.AddHeader("content-type", "application/json");
+            cliento.Execute(requesto);
+            MessageBox.Show("Objednávka " + ID + " zaplacena");
+            BackControl.frame.Navigate(new OrdersList());
         }
     }
 }

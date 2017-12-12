@@ -44,5 +44,10 @@ namespace Objednavkovy_system
         {
             BackControl.frame.Navigate(new ShoppingCart());
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            BackControl.frame.Navigate(new OrdersList());
+        }
     }
 }
