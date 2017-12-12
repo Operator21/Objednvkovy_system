@@ -38,6 +38,7 @@ namespace Objednavkovy_system
             {
                 Check.IsEnabled = false;
                 Check.Content = "Zaplaceno";
+                context.Visibility = Visibility.Collapsed;
             }
 
             GetGames();            
@@ -77,7 +78,13 @@ namespace Objednavkovy_system
                     }
                 }                    
             }
+            float price = 0;
+            foreach (GameOrder_List gol in games_in_order)
+            {
+                price += gol.Price;
+            }
             Games.ItemsSource = games_in_order;
+            Check.Content += " " + price + "$";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -98,13 +105,18 @@ namespace Objednavkovy_system
 
         private void Check_Click(object sender, RoutedEventArgs e)
         {
+            float price = 0;
+            foreach(GameOrder_List gol in games_in_order)
+            {
+                price += gol.Price;
+            }
             string url = "insert.php?Table=API_Orders&Paid=1&ID=" + ID;
             var cliento = new RestClient(BackControl.URL + url);
             var requesto = new RestRequest(Method.POST);
             requesto.AddHeader("cache-control", "no-cache");
             requesto.AddHeader("content-type", "application/json");
             cliento.Execute(requesto);
-            MessageBox.Show("Objednávka " + ID + " zaplacena");
+            MessageBox.Show("Objednávka " + ID + " zaplacena: " + price + "$");
             BackControl.frame.Navigate(new OrdersList());
         }
     }

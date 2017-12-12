@@ -20,7 +20,7 @@
         </Button>
         <ListBox Grid.Row="1" x:Name="Games" ScrollViewer.VerticalScrollBarVisibility="Visible">
             <ListBox.ContextMenu>
-                <ContextMenu>
+                <ContextMenu x:Name="context">
                     <MenuItem Header="Odstranit" Click="MenuItem_Click"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
