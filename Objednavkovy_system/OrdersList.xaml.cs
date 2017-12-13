@@ -95,6 +95,13 @@ namespace Objednavkovy_system
                 requesto.AddHeader("cache-control", "no-cache");
                 requesto.AddHeader("content-type", "application/json");
                 cliento.Execute(requesto);
+
+                string url1 = "delete.php?Table=API_Games_Orders&OrderID=" + o.ID;
+                var client1 = new RestClient(BackControl.URL + url1);
+                var request1 = new RestRequest(Method.POST);
+                request1.AddHeader("cache-control", "no-cache");
+                request1.AddHeader("content-type", "application/json");
+                client1.Execute(request1);
             }
             BackControl.frame.Navigate(new OrdersList());
         }
