@@ -23,9 +23,11 @@ namespace Objednavkovy_system
     {
         Label l;
         Game game;
+        int ID;
         public GamePage(Game g)
         {
             InitializeComponent();
+            ID = g.ID;
             game = g;
             try
             {
@@ -39,6 +41,10 @@ namespace Objednavkovy_system
             name.Content = g.Name;
             price.Content = g.Price + "$";
             l = BackControl.CartItems;
+            if (!BackControl.IsAdmin)
+            {
+                Edit.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void buy_Click(object sender, RoutedEventArgs e)
@@ -78,6 +84,16 @@ namespace Objednavkovy_system
             request.AddHeader("content-type", "application/json");
             request.AddParameter("application/json", Newtonsoft.Json.JsonConvert.SerializeObject(go), ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            BackControl.frame.Navigate(new GameList());
+        }
+
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            BackControl.frame.Navigate(new NewGame(ID));
         }
     }
 }

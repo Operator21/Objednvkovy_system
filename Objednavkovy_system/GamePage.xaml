@@ -10,6 +10,12 @@
       Title="GamePage">
 
     <StackPanel Background="#FF444444">
+        <Button Height="30" Click="Button_Click">
+            <fa:ImageAwesome Icon="ArrowCircleOutlineLeft" Margin="2"/>
+        </Button>
+        <Button x:Name="Edit" Height="30" Click="Edit_Click">
+            <fa:ImageAwesome Icon="Edit" Margin="2"/>
+        </Button>
         <Grid Height="150">
             <Image x:Name="Background" Stretch="UniformToFill" Opacity="0.5">
                 <Image.Effect>

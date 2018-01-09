@@ -129,7 +129,7 @@ namespace Objednavkovy_system
             }
             catch
             {
-                MessageBox.Show("Nejsou zadne objednavky");
+                MessageBox.Show("Nejsou zadne nezaplacene objednavky");
             }
         }
 

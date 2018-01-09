@@ -33,7 +33,7 @@ namespace Objednavkovy_system
             request.AddHeader("postman-token", "831baaf3-6305-6de2-22ea-daee8334e754");
             request.AddHeader("cache-control", "no-cache");
             IRestResponse response = client.Execute(request);
-            Item_list.ItemsSource = JsonConvert.DeserializeObject<List<Customer>>(response.Content);
+            Item_list.ItemsSource = JsonConvert.DeserializeObject<List<Game>>(response.Content);
         }
     }
 }
