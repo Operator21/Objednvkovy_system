@@ -24,6 +24,9 @@
             <Button MaxHeight="20" MinHeight="20" Margin="0,10,0,0" Click="Button_Click">
                 <fa:ImageAwesome Icon="Save" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1"/>
             </Button>
+            <Button x:Name="Delete" MaxHeight="20" MinHeight="20" Margin="0,10,0,0" Click="Button_Click_1">
+                <fa:ImageAwesome Icon="Trash" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1"/>
+            </Button>
         </StackPanel>
     </Grid>
 </Page>

@@ -29,6 +29,7 @@ namespace Objednavkovy_system
         {
             InitializeComponent();
             Control = c;
+            Delete.Visibility = Visibility.Collapsed;
         }
         public NewUser(Grid c, int id)
         {
@@ -125,6 +126,21 @@ namespace Objednavkovy_system
                 }
 
             }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Smazat uzivatele?","Smazat",MessageBoxButton.YesNo);
+            if(result == MessageBoxResult.Yes)
+            {
+                MessageBox.Show("Uzivatel smazan");
+                var client1 = new RestClient(BackControl.URL + "delete.php?Table=API_Customers&ID=" + BackControl.Logged);
+                var request1 = new RestRequest(Method.GET);
+                request1.AddHeader("cache-control", "no-cache");
+                IRestResponse response1 = client1.Execute(request1);
+                BackControl.panel.Visibility = Visibility.Collapsed;
+                BackControl.frame.Navigate(new Login(BackControl.panel));
+            }           
         }
     }
 }
