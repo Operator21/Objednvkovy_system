@@ -27,6 +27,7 @@ namespace Objednavkovy_system
         List<Order> order_list = new List<Order>();
         List<Game> games_list = new List<Game>();
         List<Order> Orders_in_gui = new List<Order>();
+        bool display_all = true;
         public OrdersList()
         {
             InitializeComponent();
@@ -38,42 +39,98 @@ namespace Objednavkovy_system
             var request1 = new RestRequest(Method.GET);
             request1.AddHeader("cache-control", "no-cache");
             IRestResponse response1 = client1.Execute(request1);
-            order_list = JsonConvert.DeserializeObject<List<Order>>(response1.Content);
-
-            var client = new RestClient(BackControl.URL + "script.php?Table=API_Games_Orders");
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("cache-control", "no-cache");
-            IRestResponse response = client.Execute(request);
-            id_list = JsonConvert.DeserializeObject<List<GameOrder>>(response.Content);
-
-            foreach (Order o in order_list)
+            try
             {
-                int count = 0;
-                foreach (GameOrder go in id_list)
+                order_list = JsonConvert.DeserializeObject<List<Order>>(response1.Content);
+                var client = new RestClient(BackControl.URL + "script.php?Table=API_Games_Orders");
+                var request = new RestRequest(Method.GET);
+                request.AddHeader("cache-control", "no-cache");
+                IRestResponse response = client.Execute(request);
+                id_list = JsonConvert.DeserializeObject<List<GameOrder>>(response.Content);
+
+                foreach (Order o in order_list)
                 {
-                    if (go.OrderID == o.ID)
+                    int count = 0;
+                    foreach (GameOrder go in id_list)
                     {
-                        count++;
-                        Debug.WriteLine(count);
+                        if (go.OrderID == o.ID)
+                        {
+                            count++;
+                            Debug.WriteLine(count);
+                        }
+                    }
+                    if (count > 0)
+                    {
+                        Orders_in_gui.Add(o);
+                        Debug.WriteLine(o.ID + " Jde do listu");
+                    }
+                    else
+                    {
+                        Debug.WriteLine(o.ID + "- nemá žádné položky, je automaticky odstraněna");
+                        string url = "delete.php?Table=API_Orders&ID=" + o.ID;
+                        var cliento = new RestClient(BackControl.URL + url);
+                        var requesto = new RestRequest(Method.POST);
+                        requesto.AddHeader("cache-control", "no-cache");
+                        requesto.AddHeader("content-type", "application/json");
+                        cliento.Execute(requesto);
                     }
                 }
-                if (count > 0)
-                {
-                    Orders_in_gui.Add(o);
-                    Debug.WriteLine(o.ID + " Jde do listu");
-                }
-                else
-                {
-                    Debug.WriteLine(o.ID + "- nemá žádné položky, je automaticky odstraněna");
-                    string url = "delete.php?Table=API_Orders&ID=" + o.ID;
-                    var cliento = new RestClient(BackControl.URL + url);
-                    var requesto = new RestRequest(Method.POST);
-                    requesto.AddHeader("cache-control", "no-cache");
-                    requesto.AddHeader("content-type", "application/json");
-                    cliento.Execute(requesto);
-                }
+                Order_list.ItemsSource = Orders_in_gui;
             }
-            Order_list.ItemsSource = Orders_in_gui;
+            catch
+            {
+                MessageBox.Show("Nejsou zadne objednavky");
+            }      
+        }
+        private void GetOrders(string u)
+        {
+            var client1 = new RestClient(BackControl.URL + "script.php?Table=API_Orders&Customer_ID=" + BackControl.Logged + u);
+            Debug.WriteLine(BackControl.URL + "script.php?Table=API_Orders&Customer_ID=" + BackControl.Logged + u);
+            var request1 = new RestRequest(Method.GET);
+            request1.AddHeader("cache-control", "no-cache");
+            IRestResponse response1 = client1.Execute(request1);
+            try
+            {
+                order_list = JsonConvert.DeserializeObject<List<Order>>(response1.Content);
+                var client = new RestClient(BackControl.URL + "script.php?Table=API_Games_Orders");
+                var request = new RestRequest(Method.GET);
+                request.AddHeader("cache-control", "no-cache");
+                IRestResponse response = client.Execute(request);
+                id_list = JsonConvert.DeserializeObject<List<GameOrder>>(response.Content);
+
+                foreach (Order o in order_list)
+                {
+                    int count = 0;
+                    foreach (GameOrder go in id_list)
+                    {
+                        if (go.OrderID == o.ID)
+                        {
+                            count++;
+                            Debug.WriteLine(count);
+                        }
+                    }
+                    if (count > 0)
+                    {
+                        Orders_in_gui.Add(o);
+                        Debug.WriteLine(o.ID + " Jde do listu");
+                    }
+                    else
+                    {
+                        Debug.WriteLine(o.ID + "- nemá žádné položky, je automaticky odstraněna");
+                        string url = "delete.php?Table=API_Orders&ID=" + o.ID;
+                        var cliento = new RestClient(BackControl.URL + url);
+                        var requesto = new RestRequest(Method.POST);
+                        requesto.AddHeader("cache-control", "no-cache");
+                        requesto.AddHeader("content-type", "application/json");
+                        cliento.Execute(requesto);
+                    }
+                }
+                Order_list.ItemsSource = Orders_in_gui;
+            }
+            catch
+            {
+                MessageBox.Show("Nejsou zadne objednavky");
+            }
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -84,19 +141,45 @@ namespace Objednavkovy_system
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show("Odstranit tuto objednavku ?","Odstranit",MessageBoxButton.YesNo);
-            if(result == MessageBoxResult.Yes)
+            Order o = (Order)Order_list.SelectedItem;
+            if (o.Paid == 1)
             {
-                Order o = (Order)Order_list.SelectedItem;
-                Debug.WriteLine(o.ID);
-                string url = "delete.php?Table=API_Orders&ID=" + o.ID;
-                var cliento = new RestClient(BackControl.URL + url);
-                var requesto = new RestRequest(Method.POST);
-                requesto.AddHeader("cache-control", "no-cache");
-                requesto.AddHeader("content-type", "application/json");
-                cliento.Execute(requesto);
+                MessageBox.Show("Zaplacené objednávky není možné smazat");
             }
+            else
+            {
+                var result = MessageBox.Show("Odstranit tuto objednavku ?", "Odstranit", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+
+                    Debug.WriteLine(o.ID);
+                    string url = "delete.php?Table=API_Orders&ID=" + o.ID;
+                    var cliento = new RestClient(BackControl.URL + url);
+                    var requesto = new RestRequest(Method.POST);
+                    requesto.AddHeader("cache-control", "no-cache");
+                    requesto.AddHeader("content-type", "application/json");
+                    cliento.Execute(requesto);
+                }
+            }
+            
             BackControl.frame.Navigate(new OrdersList());
+        }
+
+        private void Order_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Orders_in_gui.Clear();
+            if (display_all)
+            {
+                GetOrders("&Paid=0");
+                display_all = false;
+                Order_btn.Content = "Zobrazit vše";
+            } else
+            {
+                GetOrders();
+                display_all = true;
+                Order_btn.Content = "Zobrazit nezaplacené";
+            }
+            Order_list.Items.Refresh();
         }
     }
 }

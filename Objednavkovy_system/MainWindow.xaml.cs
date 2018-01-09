@@ -26,6 +26,7 @@ namespace Objednavkovy_system
             BackControl.frame = Frame;
             BackControl.CartItems = Cart_Items;
             BackControl.APIKey = "1bbedf5f-e277-451f-b895-0f972ea47383";
+            BackControl.panel = Controls;
             Controls.Visibility = Visibility.Collapsed;
             Frame.Navigate(new Login(Controls));
         }
@@ -48,6 +49,17 @@ namespace Objednavkovy_system
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             BackControl.frame.Navigate(new OrdersList());
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            BackControl.frame.Navigate(new NewUser(Controls, BackControl.Logged));
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            BackControl.panel.Visibility = Visibility.Collapsed;
+            BackControl.frame.Navigate(new Login(Controls));
         }
     }
 }

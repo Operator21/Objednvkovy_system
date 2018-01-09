@@ -95,7 +95,7 @@ namespace Objednavkovy_system
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             GameOrder_List g = (GameOrder_List)Games.SelectedItem;
-
+            
             var client1 = new RestClient(BackControl.URL + "delete.php?Table=API_Games_Orders&ID=" + g.ID);
             var request1 = new RestRequest(Method.GET);
             request1.AddHeader("cache-control", "no-cache");

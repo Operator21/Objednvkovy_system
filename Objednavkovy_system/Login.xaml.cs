@@ -47,6 +47,10 @@ namespace Objednavkovy_system
                 MessageBox.Show("Přihlášen jako " + c.Nick);
                 BackControl.Logged = c.ID;
                 Control.Visibility = Visibility.Visible;
+                if(c.Level > 0)
+                {
+                    BackControl.IsAdmin = true;
+                }      
                 BackControl.frame.Navigate(new GameList());
             }
             catch
@@ -72,6 +76,11 @@ namespace Objednavkovy_system
         {
             email.Text = "galscze";
             password.Password = "123456";
+        }
+
+        private void alogin_Click_1(object sender, RoutedEventArgs e)
+        {
+            BackControl.frame.Navigate(new NewUser(Control));
         }
     }
 }

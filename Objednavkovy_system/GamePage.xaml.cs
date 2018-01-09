@@ -27,7 +27,15 @@ namespace Objednavkovy_system
         {
             InitializeComponent();
             game = g;
-            Background.Source = new BitmapImage(new Uri(g.URL));
+            try
+            {
+                Background.Source = new BitmapImage(new Uri(g.URL));
+            }
+            catch
+            {
+                MessageBox.Show("Obrázek nelze zobrazit");
+            }
+            
             name.Content = g.Name;
             price.Content = g.Price + "$";
             l = BackControl.CartItems;

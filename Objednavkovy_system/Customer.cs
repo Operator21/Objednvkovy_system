@@ -13,5 +13,6 @@ namespace Objednavkovy_system
         public string Surname { get; set; }
         public string Nick { get; set; }
         public string Password { get; set; }
+        public int Level { get; set; }
     }
 }

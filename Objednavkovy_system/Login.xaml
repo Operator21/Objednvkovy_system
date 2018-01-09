@@ -13,6 +13,8 @@
         <TextBox x:Name="email" Margin="10,10,10,2"></TextBox>
         <PasswordBox x:Name="password" Margin="10,0"></PasswordBox>
         <Button x:Name="login" Click="login_Click" Margin="10,2,10,10">Přihlásit</Button>
-        <Button x:Name="alogin" Click="alogin_Click" Margin="10,2,10,10">Vyplnit automaticky</Button>
+        <Button x:Name="alogin" Click="alogin_Click" Margin="10,2,10,10">Vyplnit admina</Button>
+        <Button x:Name="Register" Click="alogin_Click_1" Margin="10,2,10,10">Registrovat</Button>
+        
     </StackPanel>
 </Page>

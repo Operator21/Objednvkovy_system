@@ -9,7 +9,12 @@
       Title="OrdersList">
 
     <Grid>
-        <ListView x:Name="Order_list">
+        <Grid.RowDefinitions>
+            <RowDefinition MaxHeight="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button x:Name="Order_btn" Click="Order_btn_Click">Zobrazit pouze nezaplacené</Button>
+        <ListView x:Name="Order_list" Grid.Row="1">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Label Content="{Binding Date}"></Label>
@@ -19,7 +24,7 @@
                 <ContextMenu>
                     <MenuItem Header="Editovat" Click="MenuItem_Click"/>
                     <Separator></Separator>
-                    <MenuItem Header="Odstranit" Click="MenuItem_Click_1"/>
+                    <MenuItem Header="Odstranit" x:Name="Delete_menu" Click="MenuItem_Click_1"/>
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>

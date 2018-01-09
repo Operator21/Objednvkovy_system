@@ -28,6 +28,10 @@ namespace Objednavkovy_system
         public GameList()
         {
             InitializeComponent();
+            if (!BackControl.IsAdmin)
+            {
+                Add.Visibility = Visibility.Collapsed;
+            }
             GetGames();
         }
         private void GetGames()
@@ -51,6 +55,11 @@ namespace Objednavkovy_system
         {
             selected = ((Game)Games.SelectedItem);
             BackControl.frame.Navigate(new GamePage(selected));
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            BackControl.frame.Navigate(new NewGame());
         }
     }
 }

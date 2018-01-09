@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Objednavkovy_system"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" WindowStyle="ToolWindow"
+        Title="MainWindow" Height="350" Width="525"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
@@ -31,6 +31,16 @@
                     <MenuItem Click="MenuItem_Click" Header="Objednávky">
                         <MenuItem.Icon>
                             <fa:ImageAwesome Icon="ListAlt" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_1" Header="Účet">
+                        <MenuItem.Icon>
+                            <fa:ImageAwesome Icon="User" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Click="MenuItem_Click_2" Header="Odhlásit">
+                        <MenuItem.Icon>
+                            <fa:ImageAwesome Icon="SignOut" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
