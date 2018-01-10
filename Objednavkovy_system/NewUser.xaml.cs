@@ -30,6 +30,7 @@ namespace Objednavkovy_system
             InitializeComponent();
             Control = c;
             Delete.Visibility = Visibility.Collapsed;
+            Pass_change.Visibility = Visibility.Collapsed;
         }
         public NewUser(Grid c, int id)
         {
@@ -48,15 +49,17 @@ namespace Objednavkovy_system
             Name.Text = cus.Name;
             Surname.Text = cus.Surname;
             Nick.Text = cus.Nick;
+            Pass.Password = cus.Password;
+            Pass_check.Password = cus.Password;
             Nick.IsEnabled = false;
-            Name.IsEnabled = false;
-            Surname.IsEnabled = false;
+            //Name.IsEnabled = false;
+            //Surname.IsEnabled = false;
             update = true;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(Name.Text) || string.IsNullOrWhiteSpace(Surname.Text) || string.IsNullOrWhiteSpace(Nick.Text) || string.IsNullOrWhiteSpace(Pass.Password) || string.IsNullOrWhiteSpace(Pass_check.Password))
+            if (string.IsNullOrWhiteSpace(Name.Text) || string.IsNullOrWhiteSpace(Surname.Text) || string.IsNullOrWhiteSpace(Nick.Text))
             {
                 MessageBox.Show("Všechny informace musí být vyplněné");
             }
@@ -78,8 +81,8 @@ namespace Objednavkovy_system
                         request1.AddHeader("content-type", "application/json");
                         request1.AddParameter("application/json", Newtonsoft.Json.JsonConvert.SerializeObject(c), ParameterType.RequestBody);
                         IRestResponse response1 = client1.Execute(request1);
-
-                        BackControl.frame.Navigate(new Login(Control));
+                        MessageBox.Show("Zmeny byly ulozeny");
+                        BackControl.frame.Navigate(new NewUser(BackControl.panel, ID));
                     }
                     else if(Pass.Password == Pass_check.Password)
                     {
@@ -103,7 +106,7 @@ namespace Objednavkovy_system
                             request1.AddHeader("content-type", "application/json");
                             request1.AddParameter("application/json", Newtonsoft.Json.JsonConvert.SerializeObject(c), ParameterType.RequestBody);
                             IRestResponse response1 = client1.Execute(request1);
-
+                            BackControl.panel.Visibility = Visibility.Collapsed;
                             BackControl.frame.Navigate(new Login(Control));
                         }
                         else
@@ -139,8 +142,34 @@ namespace Objednavkovy_system
                 request1.AddHeader("cache-control", "no-cache");
                 IRestResponse response1 = client1.Execute(request1);
                 BackControl.panel.Visibility = Visibility.Collapsed;
-                BackControl.frame.Navigate(new Login(BackControl.panel));
+                BackControl.frame.Navigate(new NewUser(BackControl.panel,ID));
             }           
+        }
+
+        private void Pass_change_Click(object sender, RoutedEventArgs e)
+        {
+            if(string.IsNullOrWhiteSpace(Pass.Password) || string.IsNullOrWhiteSpace(Pass_check.Password))
+            {
+                MessageBox.Show("Nejdrive vyplnte nove heslo");
+            }
+            else
+            {
+                Customer c = new Customer();
+                c.Name = Name.Text;
+                c.Surname = Surname.Text;
+                c.Nick = Nick.Text;
+                c.Password = Pass.Password;
+
+                string url = "insert.php?Table=API_Customers&ID=" + ID;
+                var client1 = new RestClient(BackControl.URL + url);
+                var request1 = new RestRequest(Method.POST);
+                request1.AddHeader("cache-control", "no-cache");
+                request1.AddHeader("content-type", "application/json");
+                request1.AddParameter("application/json", Newtonsoft.Json.JsonConvert.SerializeObject(c), ParameterType.RequestBody);
+                IRestResponse response1 = client1.Execute(request1);
+                MessageBox.Show("Heslo bylo zmeneno");
+                BackControl.frame.Navigate(new NewUser(BackControl.panel,ID));
+            }            
         }
     }
 }

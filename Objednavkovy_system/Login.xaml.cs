@@ -55,7 +55,7 @@ namespace Objednavkovy_system
             }
             catch
             {
-                MessageBox.Show("Uživatel " + email.Text + " nenalezen.");
+                MessageBox.Show("Uživatel " + email.Text + " nebyl s timto heslem nenalezen.");
                 password.Password = "";
             }
         }

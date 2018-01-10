@@ -41,7 +41,10 @@ namespace Objednavkovy_system
             string parsed = response.Content.Substring(1, response.Content.Length - 2);
             Game g = JsonConvert.DeserializeObject<Game>(parsed);
             Name.Text = g.Name;
-            URL.Text = g.URL;
+            if (g.URL != "http://www.online-shopping-street.com/images/not-available.png")
+            {
+                URL.Text = g.URL;
+            }           
             Price.Text = g.Price.ToString();
             ID = id;
             MessageBox.Show("https://student.sps-prosek.cz/~zdychst14/Game_shop/script.php?Table=API_Games&ID=" + id);
@@ -79,8 +82,14 @@ namespace Objednavkovy_system
                     float x = 0;
                     float.TryParse(Price.Text.ToString(), out x);
                     g.Price = x;
-                    g.URL = URL.Text;
-
+                    if (string.IsNullOrWhiteSpace(URL.Text))
+                    {
+                        g.URL = "http://www.online-shopping-street.com/images/not-available.png";
+                    } else
+                    {
+                        g.URL = URL.Text;
+                    }
+                   
                     var client = new RestClient(BackControl.URL + url);
                     var request = new RestRequest(Method.POST);
                     request.AddHeader("cache-control", "no-cache");
@@ -96,6 +105,21 @@ namespace Objednavkovy_system
                     MessageBox.Show("Vyskytla se neočekávaná chyba");
                 }
                 
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Smazat hru?", "Smazat", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                MessageBox.Show("Hra smazana");
+                var client1 = new RestClient(BackControl.URL + "delete.php?Table=API_Games&ID=" + BackControl.Logged);
+                var request1 = new RestRequest(Method.GET);
+                request1.AddHeader("cache-control", "no-cache");
+                IRestResponse response1 = client1.Execute(request1);
+                BackControl.panel.Visibility = Visibility.Collapsed;
+                BackControl.frame.Navigate(new GameList());
             }
         }
     }
