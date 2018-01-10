@@ -171,5 +171,18 @@ namespace Objednavkovy_system
                 BackControl.frame.Navigate(new NewUser(BackControl.panel,ID));
             }            
         }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            if (update)
+            {
+                BackControl.Navigate(new GameList());
+            }
+            else
+            {
+                BackControl.Navigate(new Login(BackControl.panel));
+            }
+            
+        }
     }
 }

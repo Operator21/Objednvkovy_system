@@ -18,5 +18,10 @@ namespace Objednavkovy_system
         public static string URL = "https://student.sps-prosek.cz/~zdychst14/Game_shop/";
         public static List<Game> GamesOrdered = new List<Game>();
         public static bool IsAdmin { get; set; }
+
+        public static void Navigate(Page p)
+        {
+            frame.Navigate(p);
+        }
     }
 }

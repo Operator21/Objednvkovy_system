@@ -8,7 +8,10 @@
       Title="NewUser"
       xmlns:fa="http://schemas.fontawesome.io/icons/" Height="337.815">
 
-    <Grid>
+    <StackPanel>
+        <Button Height="30" Click="Button_Click_2">
+            <fa:ImageAwesome Icon="ArrowCircleOutlineLeft" Margin="2"/>
+        </Button>
         <StackPanel Margin="5">
             <Label>Jmeno</Label>
             <TextBox x:Name="Name"></TextBox>
@@ -37,5 +40,5 @@
                 <fa:ImageAwesome Grid.Column="0" Icon="Trash" Margin="1"/>
             </Button>
         </StackPanel>
-    </Grid>
+    </StackPanel>
 </Page>

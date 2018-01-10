@@ -47,7 +47,7 @@ namespace Objednavkovy_system
             }           
             Price.Text = g.Price.ToString();
             ID = id;
-            MessageBox.Show("https://student.sps-prosek.cz/~zdychst14/Game_shop/script.php?Table=API_Games&ID=" + id);
+            //MessageBox.Show("https://student.sps-prosek.cz/~zdychst14/Game_shop/script.php?Table=API_Games&ID=" + id);
         }
 
         private void URL_TextChanged(object sender, TextChangedEventArgs e)
@@ -96,7 +96,7 @@ namespace Objednavkovy_system
                     request.AddHeader("content-type", "application/json");
                     request.AddParameter("application/json", Newtonsoft.Json.JsonConvert.SerializeObject(g), ParameterType.RequestBody);
                     IRestResponse response = client.Execute(request);
-                    MessageBox.Show(BackControl.URL + url);
+                    //MessageBox.Show(BackControl.URL + url);
                     Debug.WriteLine(response.Content);
                     BackControl.frame.Navigate(new GameList());
                 }
@@ -114,13 +114,17 @@ namespace Objednavkovy_system
             if (result == MessageBoxResult.Yes)
             {
                 MessageBox.Show("Hra smazana");
-                var client1 = new RestClient(BackControl.URL + "delete.php?Table=API_Games&ID=" + BackControl.Logged);
+                var client1 = new RestClient(BackControl.URL + "delete.php?Table=API_Games&ID=" + ID);
                 var request1 = new RestRequest(Method.GET);
                 request1.AddHeader("cache-control", "no-cache");
                 IRestResponse response1 = client1.Execute(request1);
-                BackControl.panel.Visibility = Visibility.Collapsed;
                 BackControl.frame.Navigate(new GameList());
             }
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            BackControl.Navigate(new GameList());
         }
     }
 }
