@@ -36,11 +36,10 @@ namespace Objednavkovy_system
             if (CheckConnection.IsTrue())
             {
                 if (BackControl.DisplayCount < 1)
-                {                    
-                    foreach(Game g in games)
+                {
+                    foreach (Game g in games)
                     {
-                        Debug.WriteLine(g.ID + "/" + g.Name);
-                        App.Database.SaveGame(g);
+                        Save(g);
                     }
                     MessageBox.Show("Katalog uložen do offline");
                 }
@@ -82,6 +81,10 @@ namespace Objednavkovy_system
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             BackControl.frame.Navigate(new NewGame());
+        }
+        private async void Save(Game g)
+        {
+            await App.Database.SaveGame(g);
         }
     }
 }

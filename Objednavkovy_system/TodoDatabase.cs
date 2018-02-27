@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Objednavkovy_system
 {
@@ -21,6 +22,7 @@ namespace Objednavkovy_system
         }
         public Task<int> SaveGame(Game item)
         {
+            MessageBox.Show("Ulozen " + item.Name);
             if (item.ID != 0)
             {
                 return database.UpdateAsync(item);
