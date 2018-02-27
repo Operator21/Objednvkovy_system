@@ -13,5 +13,18 @@ namespace Objednavkovy_system
     /// </summary>
     public partial class App : Application
     {
+        private static TodoDatabase _database;
+        public static TodoDatabase Database
+        {
+            get
+            {
+                if (_database == null)
+                {
+                    var fileHelper = new FileHelper();
+                    _database = new TodoDatabase(fileHelper.GetLocalFilePath("Offline_backup.db3"));
+                }
+                return _database;
+            }
+        }
     }
 }
