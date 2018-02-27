@@ -9,6 +9,7 @@ namespace Objednavkovy_system
 {
     public static class BackControl
     {
+        public static int DisplayCount { get; set; }
         public static Frame frame { get; set; }
         public static Grid panel { get; set; }
         public static Label CartItems { get; set; }

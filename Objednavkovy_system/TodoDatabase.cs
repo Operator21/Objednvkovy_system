@@ -15,5 +15,20 @@ namespace Objednavkovy_system
             database = new SQLiteAsyncConnection(dbPath);
             database.CreateTableAsync<Game>().Wait();
         }
+        public Task<List<Game>> GetGames()
+        {
+            return database.Table<Game>().ToListAsync();
+        }
+        public Task<int> SaveGame(Game item)
+        {
+            if (item.ID != 0)
+            {
+                return database.UpdateAsync(item);
+            }
+            else
+            {
+                return database.InsertAsync(item);
+            }
+        }
     }
 }

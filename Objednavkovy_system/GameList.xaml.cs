@@ -33,21 +33,43 @@ namespace Objednavkovy_system
                 Add.Visibility = Visibility.Collapsed;
             }
             GetGames();
+            if (CheckConnection.IsTrue())
+            {
+                if (BackControl.DisplayCount < 1)
+                {                    
+                    foreach(Game g in games)
+                    {
+                        Debug.WriteLine(g.ID + "/" + g.Name);
+                        App.Database.SaveGame(g);
+                    }
+                    MessageBox.Show("Katalog uložen do offline");
+                }
+                BackControl.DisplayCount++;
+            }           
         }
         private void GetGames()
         {
-            var client = new RestClient("https://student.sps-prosek.cz/~zdychst14/Game_shop/script.php?Table=API_Games");
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("cache-control", "no-cache");
-            IRestResponse response = client.Execute(request);
-            games = JsonConvert.DeserializeObject<List<Game>>(response.Content);
-            foreach(Game g in games)
+            if (CheckConnection.IsTrue())
             {
-                Debug.WriteLine(g.ID.ToString());
-                Debug.WriteLine(g.Name);
-                Debug.WriteLine(g.Price);
-                Debug.WriteLine(g.URL);
+                var client = new RestClient("https://student.sps-prosek.cz/~zdychst14/Game_shop/script.php?Table=API_Games");
+                var request = new RestRequest(Method.GET);
+                request.AddHeader("cache-control", "no-cache");
+                IRestResponse response = client.Execute(request);
+                games = JsonConvert.DeserializeObject<List<Game>>(response.Content);
+                foreach (Game g in games)
+                {
+                    Debug.WriteLine(g.ID.ToString());
+                    Debug.WriteLine(g.Name);
+                    Debug.WriteLine(g.Price);
+                    Debug.WriteLine(g.URL);
+                }
             }
+            else
+            {
+                games = App.Database.GetGames().Result;
+                MessageBox.Show("Databáze je v režimu offline");
+            }
+            
             Games.ItemsSource = games;
         }
 

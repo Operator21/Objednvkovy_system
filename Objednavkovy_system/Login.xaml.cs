@@ -29,7 +29,16 @@ namespace Objednavkovy_system
         public Login(Grid c)
         {
             InitializeComponent();
+            BackControl.DisplayCount = 0;
             Control = c;
+            if (!CheckConnection.IsTrue())
+            {
+                login.IsEnabled = false;
+                alogin.IsEnabled = false;
+                Register.IsEnabled = false;
+                email.IsEnabled = false;
+                password.IsEnabled = false;
+            }
         }
         private async Task GetItems()
         {
@@ -81,6 +90,12 @@ namespace Objednavkovy_system
         private void alogin_Click_1(object sender, RoutedEventArgs e)
         {
             BackControl.frame.Navigate(new NewUser(Control));
+        }
+
+        private void offline_Click(object sender, RoutedEventArgs e)
+        {
+            BackControl.frame.Navigate(new GameList());
+            Control.Visibility = Visibility.Visible;
         }
     }
 }

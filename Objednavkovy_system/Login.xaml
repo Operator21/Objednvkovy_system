@@ -15,6 +15,6 @@
         <Button x:Name="login" Click="login_Click" Margin="10,2,10,10">Přihlásit</Button>
         <Button x:Name="alogin" Click="alogin_Click" Margin="10,2,10,10">Vyplnit admina</Button>
         <Button x:Name="Register" Click="alogin_Click_1" Margin="10,2,10,10">Registrovat</Button>
-        
+        <Button x:Name="offline" Click="offline_Click" Margin="10,2,10,10">Katalog</Button>
     </StackPanel>
 </Page>

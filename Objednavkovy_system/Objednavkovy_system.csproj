@@ -99,6 +99,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CheckConnection.cs" />
     <Compile Include="FileHelper.cs" />
     <Compile Include="GameOrder.cs" />
     <Compile Include="GameOrder_List.cs" />
