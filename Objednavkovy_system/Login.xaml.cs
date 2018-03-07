@@ -26,9 +26,14 @@ namespace Objednavkovy_system
     {
         string pswd;
         Grid Control;
+        List<Game> game_list = new List<Game>();
         public Login(Grid c)
         {
             InitializeComponent();
+            foreach(Game ga in game_list)
+            {
+                Debug.WriteLine(ga.ID + " " + ga.Name);
+            }
             BackControl.DisplayCount = 0;
             Control = c;
             if (!CheckConnection.IsTrue())

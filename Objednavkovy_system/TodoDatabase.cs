@@ -20,9 +20,9 @@ namespace Objednavkovy_system
         {
             return database.Table<Game>().ToListAsync();
         }
-        public Task<int> SaveGame(Game item)
+        /*public Task<int> SaveGame(Game item)
         {
-            MessageBox.Show("Ulozen " + item.Name);
+            //MessageBox.Show("Ulozen " + item.Name);
             if (item.ID != 0)
             {
                 return database.UpdateAsync(item);
@@ -31,6 +31,11 @@ namespace Objednavkovy_system
             {
                 return database.InsertAsync(item);
             }
+        }*/
+        public Task<int> SaveGame(Game item)
+        {
+            //MessageBox.Show("Ulozen " + item.Name);
+            return database.InsertOrReplaceAsync(item);
         }
     }
 }

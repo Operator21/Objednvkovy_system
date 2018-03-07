@@ -82,7 +82,7 @@ namespace Objednavkovy_system
         {
             BackControl.frame.Navigate(new NewGame());
         }
-        private async void Save(Game g)
+        private async Task Save(Game g)
         {
             await App.Database.SaveGame(g);
         }

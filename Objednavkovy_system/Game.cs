@@ -9,7 +9,7 @@ namespace Objednavkovy_system
 {
     public class Game
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
         public int ID { get; set; }
         public string Name { get; set; }
         public float Price { get; set; }
