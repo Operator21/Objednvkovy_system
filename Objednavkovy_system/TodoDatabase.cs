@@ -15,10 +15,15 @@ namespace Objednavkovy_system
         {
             database = new SQLiteAsyncConnection(dbPath);
             database.CreateTableAsync<Game>().Wait();
+            database.CreateTableAsync<Cart_Item>().Wait();
         }
         public Task<List<Game>> GetGames()
         {
             return database.Table<Game>().ToListAsync();
+        }
+        public Task<List<Cart_Item>> GetItems()
+        {
+            return database.Table<Cart_Item>().ToListAsync();
         }
         /*public Task<int> SaveGame(Game item)
         {
@@ -34,8 +39,15 @@ namespace Objednavkovy_system
         }*/
         public Task<int> SaveGame(Game item)
         {
-            //MessageBox.Show("Ulozen " + item.Name);
             return database.InsertOrReplaceAsync(item);
         }
+        public Task<int> SaveCart(List<Cart_Item> l) 
+        {
+            return database.InsertAllAsync(l);   
+        }
+        /*public Task<Cart_Item> WipeCart()
+        {
+            return database.QueryAsync<Cart_Item>("");
+        }*/
     }
 }

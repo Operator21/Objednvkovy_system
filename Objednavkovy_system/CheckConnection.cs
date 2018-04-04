@@ -10,7 +10,7 @@ namespace Objednavkovy_system
 {
     public static class CheckConnection
     {
-        static bool connect = false;
+        static bool connect = true;
         public static bool IsTrue()
         {
             var client = new RestClient("https://student.sps-prosek.cz/~zdychst14/Game_shop/connection.php");

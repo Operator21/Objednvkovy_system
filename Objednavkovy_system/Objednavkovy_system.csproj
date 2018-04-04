@@ -99,6 +99,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Cart_Item.cs" />
     <Compile Include="CheckConnection.cs" />
     <Compile Include="FileHelper.cs" />
     <Compile Include="GameOrder.cs" />

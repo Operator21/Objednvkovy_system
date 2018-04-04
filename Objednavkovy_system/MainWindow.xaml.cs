@@ -28,6 +28,11 @@ namespace Objednavkovy_system
             BackControl.APIKey = "1bbedf5f-e277-451f-b895-0f972ea47383";
             BackControl.panel = Controls;
             Controls.Visibility = Visibility.Collapsed;
+            if (CheckConnection.IsTrue())
+            {
+                Order_btn.Visibility = Visibility.Collapsed;
+                User_btn.Visibility = Visibility.Collapsed;
+            }
             Frame.Navigate(new Login(Controls));
         }
 

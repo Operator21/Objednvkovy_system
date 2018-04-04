@@ -24,5 +24,11 @@ namespace Objednavkovy_system
         {
             frame.Navigate(p);
         }
+        public static List<MenuItem> Buttons = new List<MenuItem>();
+        public static MenuItem getButton(string s)
+        {
+            MenuItem b = (MenuItem)panel.FindName(s);
+            return b;
+        }
     }
 }

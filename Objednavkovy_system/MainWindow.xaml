@@ -28,12 +28,12 @@
                             <fa:ImageAwesome Icon="Gamepad" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Click="MenuItem_Click" Header="Objednávky">
+                    <MenuItem Click="MenuItem_Click" Header="Objednávky" x:Name="Order_btn">
                         <MenuItem.Icon>
                             <fa:ImageAwesome Icon="ListAlt" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Click="MenuItem_Click_1" Header="Účet">
+                    <MenuItem Click="MenuItem_Click_1" Header="Účet" x:Name="User_btn">
                         <MenuItem.Icon>
                             <fa:ImageAwesome Icon="User" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </MenuItem.Icon>

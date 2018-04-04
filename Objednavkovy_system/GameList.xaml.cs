@@ -66,6 +66,10 @@ namespace Objednavkovy_system
             else
             {
                 games = App.Database.GetGames().Result;
+                MenuItem o = BackControl.getButton("Order_btn");
+                o.Visibility = Visibility.Collapsed;
+                MenuItem u = BackControl.getButton("User_btn");
+                u.Visibility = Visibility.Collapsed;
                 MessageBox.Show("Databáze je v režimu offline");
             }
             

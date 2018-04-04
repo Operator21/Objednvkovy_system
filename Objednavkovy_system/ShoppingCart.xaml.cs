@@ -41,97 +41,54 @@ namespace Objednavkovy_system
             {
                 alert.Visibility = Visibility.Collapsed;
             }
-        }
-        private void GetGames()
-        {
-            /*var client1 = new RestClient(BackControl.URL + "script.php?Table=API_Orders&Customer_ID=" + BackControl.Logged);
-            var request1 = new RestRequest(Method.GET);
-            request1.AddHeader("cache-control", "no-cache");
-            IRestResponse response1 = client1.Execute(request1);
-            order_list = JsonConvert.DeserializeObject<List<Order>>(response1.Content);
-
-            var client = new RestClient(BackControl.URL + "script.php?Table=API_Games_Orders");
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("cache-control", "no-cache");
-            IRestResponse response = client.Execute(request);
-            id_list = JsonConvert.DeserializeObject<List<GameOrder>>(response.Content);
-
-            foreach (Order o in order_list)
+            if(App.Database.GetItems().Result.Count() < 1)
             {
-                Debug.WriteLine("Prověřuji: " + o.ID);
-                count = 0;
-                foreach(GameOrder go in id_list)
-                {
-                    if(go.OrderID == o.ID)
-                    {
-                        count++;
-                        Debug.WriteLine(count);
-                    }               
-                }
-                if(count > 0)
-                {
-                    Orders_in_gui.Add(o);
-                    Debug.WriteLine(o.ID + " Jde do listu");
-                } else
-                {
-                    Debug.WriteLine(o.ID + "-");
-                }
+                Offline.IsEnabled = false;
             }
-            Order_list.ItemsSource = Orders_in_gui;*/
-            /*
-            var client2 = new RestClient(BackControl.URL + "script.php?Table=API_Games");
-            var request2 = new RestRequest(Method.GET);
-            request2.AddHeader("cache-control", "no-cache");
-            IRestResponse response2 = client2.Execute(request2);
-            games_list = JsonConvert.DeserializeObject<List<Game>>(response2.Content);*/
-
-            
-            /*foreach (Order o in order_list)
+            if (!CheckConnection.IsTrue())
             {
-                Debug.WriteLine("Objednavka: " + o.ID);
-                foreach(GameOrder go in id_list)
-                {
-                    if(go.OrderID == o.ID)
-                    {
-                        Debug.WriteLine("-" + go.ID);
-                        foreach(Game g in games_list)
-                        {
-                            if(g.ID == go.GameID)
-                            {
-                                Debug.WriteLine("--" + g.Name);
-                                games_in_order.Add(g);
-                                price += g.Price;
-                                Check.Content = "Zaplatit " + price;
-                            }    
-                        }
-                    }                    
-                }
-            }*/
-            //Games.ItemsSource = games_in_order;
+                Offline.IsEnabled = false;
+            }
         }
 
         private void Check_Click(object sender, RoutedEventArgs e)
         {
-            Order o = new Order();
-            o.CustomerID = BackControl.Logged;
-
-            string urlo = "insert.php?Table=API_Orders";
-            var cliento = new RestClient(BackControl.URL + urlo);
-            var requesto = new RestRequest(Method.POST);
-            requesto.AddHeader("cache-control", "no-cache");
-            requesto.AddHeader("content-type", "application/json");
-            requesto.AddParameter("application/json", Newtonsoft.Json.JsonConvert.SerializeObject(o), ParameterType.RequestBody);
-            IRestResponse responseo = cliento.Execute(requesto);
-            BackControl.Order = Convert.ToInt32(responseo.Content);
-
-            foreach (Game g in BackControl.GamesOrdered)
+            if (CheckConnection.IsTrue())
             {
-                OrderAdd(g);
+                Order o = new Order();
+                o.CustomerID = BackControl.Logged;
+
+                string urlo = "insert.php?Table=API_Orders";
+                var cliento = new RestClient(BackControl.URL + urlo);
+                var requesto = new RestRequest(Method.POST);
+                requesto.AddHeader("cache-control", "no-cache");
+                requesto.AddHeader("content-type", "application/json");
+                requesto.AddParameter("application/json", Newtonsoft.Json.JsonConvert.SerializeObject(o), ParameterType.RequestBody);
+                IRestResponse responseo = cliento.Execute(requesto);
+                BackControl.Order = Convert.ToInt32(responseo.Content);
+
+                foreach (Game g in BackControl.GamesOrdered)
+                {
+                    OrderAdd(g);
+                }
+                MessageBox.Show(BackControl.GamesOrdered.Count() + " produktů bylo objednáno");
+                BackControl.GamesOrdered.Clear();
+                BackControl.frame.Navigate(new ShoppingCart());
+                alert.Visibility = Visibility.Visible;
+            } else
+            {
+                List<Cart_Item> items = new List<Cart_Item>();
+                foreach (Game g in BackControl.GamesOrdered)
+                {
+                    Cart_Item i = new Cart_Item();
+                    i.Game_ID = g.ID;
+                    items.Add(i);
+                }
+                App.Database.SaveCart(items);
+                MessageBox.Show(BackControl.GamesOrdered.Count() + " produktů bylo uloženo do offline košíku");
+                BackControl.GamesOrdered.Clear();
+                BackControl.frame.Navigate(new ShoppingCart());
             }
-            MessageBox.Show(BackControl.GamesOrdered.Count() + " produktů bylo objednáno");
-            BackControl.GamesOrdered.Clear();
-            BackControl.frame.Navigate(new ShoppingCart());
-            alert.Visibility = Visibility.Visible;
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -157,6 +114,34 @@ namespace Objednavkovy_system
             request.AddHeader("content-type", "application/json");
             request.AddParameter("application/json", Newtonsoft.Json.JsonConvert.SerializeObject(go), ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
+        }
+
+        private void Offline_Click(object sender, RoutedEventArgs e)
+        {
+            alert.Visibility = Visibility.Collapsed;
+            foreach(Cart_Item c in App.Database.GetItems().Result)
+            {
+                Debug.WriteLine(c.ID + "/" + c.Game_ID);
+                try
+                {
+                    var client = new RestClient("https://student.sps-prosek.cz/~zdychst14/Game_shop/script.php?Table=API_Games&ID=" + c.Game_ID);
+                    var request = new RestRequest(Method.GET);
+                    request.AddHeader("postman-token", "831baaf3-6305-6de2-22ea-daee8334e754");
+                    request.AddHeader("cache-control", "no-cache");
+                    IRestResponse response = client.Execute(request);
+                    MessageBox.Show(response.Content);
+                    string parsed = response.Content.Substring(1, response.Content.Length - 2);
+                    MessageBox.Show(parsed);
+                    Game g = JsonConvert.DeserializeObject<Game>(parsed);
+                    games_list.Add(g);
+                }
+                catch
+                {
+                    Debug.WriteLine(c.Game_ID + " was not found in database");
+                } 
+            }
+            BackControl.GamesOrdered = games_list;
+            BackControl.Navigate(new ShoppingCart());
         }
     }
 }

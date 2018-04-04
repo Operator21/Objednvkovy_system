@@ -44,11 +44,7 @@ namespace Objednavkovy_system
             if (!BackControl.IsAdmin)
             {
                 Edit.Visibility = Visibility.Collapsed;
-            }
-            if (!CheckConnection.IsTrue())
-            {
-                buy.IsEnabled = false;
-            }                    
+            }                 
         }
 
         private void buy_Click(object sender, RoutedEventArgs e)
