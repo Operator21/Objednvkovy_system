@@ -15,6 +15,7 @@ namespace Objednavkovy_system
         public static Label CartItems { get; set; }
         public static string APIKey { get; set; }
         public static int Logged { get; set; }
+        public static bool IsLogged { get; set; }
         public static int Order { get; set; }
         public static string URL = "https://student.sps-prosek.cz/~zdychst14/Game_shop/";
         public static List<Game> GamesOrdered = new List<Game>();

@@ -45,9 +45,9 @@ namespace Objednavkovy_system
         {
             return database.InsertAllAsync(l);   
         }
-        /*public Task<Cart_Item> WipeCart()
+        public Task<int> Delete(Cart_Item item)
         {
-            return database.QueryAsync<Cart_Item>("");
-        }*/
+            return database.DeleteAsync(item);
+        }
     }
 }

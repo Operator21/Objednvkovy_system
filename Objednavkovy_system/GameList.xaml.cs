@@ -35,16 +35,25 @@ namespace Objednavkovy_system
             GetGames();
             if (CheckConnection.IsTrue())
             {
+                if (BackControl.IsLogged)
+                {
+                    BackControl.getButton("Order_btn").Visibility = Visibility.Visible;
+                    BackControl.getButton("User_btn").Visibility = Visibility.Visible;
+                }
                 if (BackControl.DisplayCount < 1)
                 {
                     foreach (Game g in games)
                     {
                         Save(g);
                     }
-                    MessageBox.Show("Katalog uložen do offline");
                 }
                 BackControl.DisplayCount++;
-            }           
+            }
+            if (!BackControl.IsLogged)
+            {
+                BackControl.getButton("Order_btn").Visibility = Visibility.Collapsed;
+                BackControl.getButton("User_btn").Visibility = Visibility.Collapsed;
+            }
         }
         private void GetGames()
         {

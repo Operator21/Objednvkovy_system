@@ -60,6 +60,7 @@ namespace Objednavkovy_system
                 Customer c = JsonConvert.DeserializeObject<Customer>(parsed);
                 MessageBox.Show("Přihlášen jako " + c.Nick);
                 BackControl.Logged = c.ID;
+                BackControl.IsLogged = true;                
                 Control.Visibility = Visibility.Visible;
                 if(c.Level > 0)
                 {

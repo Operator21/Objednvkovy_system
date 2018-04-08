@@ -45,15 +45,19 @@ namespace Objednavkovy_system
             {
                 Offline.IsEnabled = false;
             }
-            if (!CheckConnection.IsTrue())
+            if (!CheckConnection.IsTrue() && )
             {
                 Offline.IsEnabled = false;
+            }
+            if (!BackControl.IsLogged)
+            {
+                Check.Content = "Uložit";
             }
         }
 
         private void Check_Click(object sender, RoutedEventArgs e)
         {
-            if (CheckConnection.IsTrue())
+            if (CheckConnection.IsTrue() && BackControl.IsLogged)
             {
                 Order o = new Order();
                 o.CustomerID = BackControl.Logged;
@@ -129,11 +133,10 @@ namespace Objednavkovy_system
                     request.AddHeader("postman-token", "831baaf3-6305-6de2-22ea-daee8334e754");
                     request.AddHeader("cache-control", "no-cache");
                     IRestResponse response = client.Execute(request);
-                    MessageBox.Show(response.Content);
                     string parsed = response.Content.Substring(1, response.Content.Length - 2);
-                    MessageBox.Show(parsed);
                     Game g = JsonConvert.DeserializeObject<Game>(parsed);
                     games_list.Add(g);
+                    App.Database.Delete(c);
                 }
                 catch
                 {

@@ -28,7 +28,7 @@ namespace Objednavkovy_system
             BackControl.APIKey = "1bbedf5f-e277-451f-b895-0f972ea47383";
             BackControl.panel = Controls;
             Controls.Visibility = Visibility.Collapsed;
-            if (CheckConnection.IsTrue())
+            if (!CheckConnection.IsTrue() )
             {
                 Order_btn.Visibility = Visibility.Collapsed;
                 User_btn.Visibility = Visibility.Collapsed;
@@ -64,6 +64,9 @@ namespace Objednavkovy_system
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
         {
             BackControl.panel.Visibility = Visibility.Collapsed;
+            BackControl.IsLogged = false;
+            BackControl.Logged = 0;
+            BackControl.IsAdmin = false;
             BackControl.frame.Navigate(new Login(Controls));
         }
     }
