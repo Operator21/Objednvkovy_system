@@ -67,6 +67,7 @@ namespace Objednavkovy_system
             BackControl.IsLogged = false;
             BackControl.Logged = 0;
             BackControl.IsAdmin = false;
+            BackControl.GamesOrdered.Clear();
             BackControl.frame.Navigate(new Login(Controls));
         }
     }

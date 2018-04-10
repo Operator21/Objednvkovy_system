@@ -45,7 +45,7 @@ namespace Objednavkovy_system
             {
                 Offline.IsEnabled = false;
             }
-            if (!CheckConnection.IsTrue() && )
+            if (!CheckConnection.IsTrue())
             {
                 Offline.IsEnabled = false;
             }
@@ -123,8 +123,10 @@ namespace Objednavkovy_system
         private void Offline_Click(object sender, RoutedEventArgs e)
         {
             alert.Visibility = Visibility.Collapsed;
+            int loop = 0;
             foreach(Cart_Item c in App.Database.GetItems().Result)
             {
+                loop++;
                 Debug.WriteLine(c.ID + "/" + c.Game_ID);
                 try
                 {
@@ -140,7 +142,12 @@ namespace Objednavkovy_system
                 }
                 catch
                 {
+                    if (loop == 1)
+                    {  
+                        MessageBox.Show("Některé hry z offline košíku již nejsou dostupné v obchodě");
+                    }
                     Debug.WriteLine(c.Game_ID + " was not found in database");
+                    App.Database.Delete(c);
                 } 
             }
             BackControl.GamesOrdered = games_list;
